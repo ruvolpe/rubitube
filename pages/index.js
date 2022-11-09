@@ -1,3 +1,4 @@
+import React from "react";
 import config from "../config.json";
 import styled from "styled-components";
 import { CSSReset } from "../src/components/CSSReset";
@@ -8,13 +9,15 @@ import Footer from "../src/components/Footer";
 import { StyledFavorites } from "../src/components/Favorite";
 
 function HomePage() {
+    const [valorDoFiltro, setValorDoFiltro] = React.useState("");
+
     return (
         <>
         <CSSReset/>
         <div>
-            <Menu/>
+            <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro}/>
             <Header/>
-            <Timeline playlists = {config.playlists}/>
+            <Timeline searchValue = {valorDoFiltro} playlists = {config.playlists}/>
             <Favorite favorites = {config.favorites}/>
             <Footer/>
         </div>
@@ -24,15 +27,19 @@ function HomePage() {
   
   export default HomePage
 
+  const StyledBanner =styled.div`
+    background-image: url(https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80);
+    background-position: center center;
+    height:230px;
+  `;
+
+
   function Header() {
     return(
         <StyledHeader>
-            <section>
-                <img className="banner" 
-                src={"https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80"} alt="banner" />
-            </section>
+            <StyledBanner/>
             <section className="user-info">
-                <img className="profile" src={`https://github.com/${config.github}.png`} alt="profile picture" />
+                <a href="https://github.com/ruvolpe"><img className="profile" src={`https://github.com/${config.github}.png`} alt="profile picture" /></a>
                 <div>
                     <h2>
                         {config.name}
@@ -46,30 +53,34 @@ function HomePage() {
     )
   }
 
-  function Timeline(props) {
+  function Timeline({searchValue, ...props}) {
     const playlistNames = Object.keys(props.playlists)
 
     return(
         <StyledTimeline>
             {playlistNames.map((playlistName) => {
                 const videos = props.playlists[playlistName];
-                console.log(playlistName);
-                console.log(videos);
                 return (
-                    <section>
+                    <section key={playlistName}>
                         <h2>
                             {playlistName}
                         </h2>
-                        <div>
-                        {videos.map( (video)=>{
-                            return(
-                                <a href={video.url}>
-                                    <img src={video.thumb}/>
-                                    <span>{video.title}</span>
-                                 </a>
-                                )
-                            }
-                        )}
+                        <div >
+                        {videos
+                            .filter((video) => {
+                                const titleNormalized = video.title.toLowerCase();
+                                const searchValueNormalized = searchValue.toLowerCase();
+                                return titleNormalized.includes(searchValueNormalized)
+                            }).map( (video)=>{
+                                return(
+                                    <a key={video.url} href={video.url}>
+                                        <img src={video.thumb}/>
+                                        <span>{video.title}</span>
+                                    </a>
+                                    )
+                                }
+                            )
+                        }
                         </div>
                     </section>
                 )
@@ -86,14 +97,14 @@ function HomePage() {
         {favoriteNames.map((favoriteName) => {
             const videos = props.favorites[favoriteName];
             return (
-                <section>
+                <section key={favoriteName}>
                     <h2>
                         {favoriteName}
                     </h2>
                     <div>
                     {videos.map( (video)=>{
                         return(
-                            <a href={video.url}>
+                                <a key={video.url} href={video.url}>
                                 <img src={video.thumb}/>
                                 <span>{video.title}</span>
                             </a>
