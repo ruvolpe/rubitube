@@ -5,6 +5,7 @@ import Menu from "../src/components/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
 import { StyledHeader } from "../src/components/Header";
 import Footer from "../src/components/Footer";
+import { StyledFavorites } from "../src/components/Favorite";
 
 function HomePage() {
     return (
@@ -14,6 +15,7 @@ function HomePage() {
             <Menu/>
             <Header/>
             <Timeline playlists = {config.playlists}/>
+            <Favorite favorites = {config.favorites}/>
             <Footer/>
         </div>
         </>
@@ -73,5 +75,35 @@ function HomePage() {
                 )
             })}
         </StyledTimeline>
+    )
+  }
+  
+
+  function Favorite (props) {
+    const favoriteNames = Object.keys(props.favorites)
+    return(
+    <StyledFavorites>
+        {favoriteNames.map((favoriteName) => {
+            const videos = props.favorites[favoriteName];
+            return (
+                <section>
+                    <h2>
+                        {favoriteName}
+                    </h2>
+                    <div>
+                    {videos.map( (video)=>{
+                        return(
+                            <a href={video.url}>
+                                <img src={video.thumb}/>
+                                <span>{video.title}</span>
+                            </a>
+                            )
+                        }
+                    )}
+                    </div>
+                </section>
+            )
+        })}
+    </StyledFavorites>
     )
   }
