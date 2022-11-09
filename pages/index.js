@@ -4,6 +4,7 @@ import { CSSReset } from "../src/components/CSSReset";
 import Menu from "../src/components/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
 import { StyledHeader } from "../src/components/Header";
+import Footer from "../src/components/Footer";
 
 function HomePage() {
     return (
@@ -13,6 +14,7 @@ function HomePage() {
             <Menu/>
             <Header/>
             <Timeline playlists = {config.playlists}/>
+            <Footer/>
         </div>
         </>
     )
@@ -23,8 +25,12 @@ function HomePage() {
   function Header() {
     return(
         <StyledHeader>
+            <section>
+                <img className="banner" 
+                src={"https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80"} alt="banner" />
+            </section>
             <section className="user-info">
-                <img src={`https://github.com/${config.github}.png`} alt="profile picture" />
+                <img className="profile" src={`https://github.com/${config.github}.png`} alt="profile picture" />
                 <div>
                     <h2>
                         {config.name}
