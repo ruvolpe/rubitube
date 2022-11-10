@@ -3,11 +3,23 @@ import styled from 'styled-components';
 
 const StyledFooter = styled.footer`
   .footer {
-    text-align: center;
     margin: 50px 0 50px 0;
+    text-align: center;
   }
-  .footer p a {
-    color: #d10068;
+  a:link {
+    color: hotpink;
+  }
+
+  a:visited {
+    color: hotpink;
+  }
+
+  a:hover {
+    color: hotpink;
+  }
+
+  a:active {
+    color: hotpink;
   }
 `;
 
