@@ -30,8 +30,8 @@ export default function Menu({valorDoFiltro, setValorDoFiltro}) {
   return (
     <>
     <StyledMenu> 
-        <Logo />
-        Rubi<strong>Tube</strong>
+      <Logo /> 
+      Rubi<strong>Tube</strong>
         <Search valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro}></Search>
         <DarkModeSwitch/>
     </StyledMenu>
